@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function storeAvatar(Request $request) {
+        $request->file('avatar')->store('public/avatars');
+        return ('hey');
+    }
+
+    public function showAvatarForm(){
+        return view('avatar-form');
+    }
+
     public function showCorrectHomepage() {
         if (auth()->check()) {
             return view('homepage-feed');

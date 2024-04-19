@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 
@@ -20,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('visitAdminPages', function($user) {
+            return $user->isAdmin === 1;
+        });
+
         RedirectIfAuthenticated::redirectUsing(fn ($request) => route('login')->with('failure', 'Please login for creating a post'));
     }
 }

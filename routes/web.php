@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FollowController;
 
 Route::get('/admins-only', function(){
     return 'Only admins should be able to see this page.';
@@ -15,6 +16,13 @@ Route::post('/login', [UserController::class, 'login'])->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 Route::get('/manage-avatar', [UserController::class, 'showAvatarForm'])->middleware('auth');
 Route::post('/manage-avatar', [UserController::class, 'storeAvatar'])->middleware('auth');
+
+
+// Follow related Routes
+Route::post('/create-follow/{user:username}', [FollowController::class, 'createFollow'])->middleware('auth');
+Route::post('/remove-follow/{user:username}', [FollowController::class, 'removeFollow'])->middleware('auth');
+
+
 
 // blog post routes
 Route::get('/create-post', [PostController::class, 'showCreateForm'])->middleware('auth');
